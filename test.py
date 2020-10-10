@@ -1,6 +1,11 @@
 import scipy.io
-import matplotlib.pyplot as plt
-import math
+import pandas as pd
+
+from sklearn.linear_model import LinearRegression
+
+from sklearn.preprocessing import StandardScaler, OneHotEncoder,OrdinalEncoder
+
+from sklearn.preprocessing import StandardScaler
 
 list_data = []
 for d in range(1,21):
@@ -39,11 +44,42 @@ for d in range(1,21):
             t2 = 'GSR(palm)'
         else:
             t2 = 'Respiration'
-
-        list_data.append({'data':data[i-1],
-                          'emotion':t1,
+        tmp_dict = {}
+        tmp_dict.update({'emotion':t1,
                           'day':day,
-                          'sensor':t2})
-data = [x for x in list_data if x['emotion'] == 'Anger']
-print(data)
+                          'sensor':t2,
+                          'data':data[i-1]})
+        # for i,d in enumerate(data[0]):
+        #     tmp_dict.update({'data'+str(i):d})
+        list_data.append(tmp_dict)
 
+table = []
+for day in range(1,21):
+    data_day = [x for x in list_data if x['day'] == 'day' + str(day)]
+
+
+    for emotion in ['Anger','No Emotion','Grief','Hate','P-Love','R-Love','Joy','Reverence']:
+        emotion_table = {}
+        emotion_day = [x for x in data_day if x['emotion'] == emotion]
+
+        emotion_table.update({'emotion':emotion ,
+                              'EMG(jaw)':[x['data'] for x in emotion_day if x['sensor']=='EMG(jaw)'][0],
+                              'BVP': [x['data'] for x in emotion_day if x['sensor'] == 'BVP'][0],
+                              'GSR(palm)': [x['data'] for x in emotion_day if x['sensor'] == 'GSR(palm)'][0],
+                              'Respiration': [x['data'] for x in emotion_day if x['sensor'] == 'Respiration'][0]
+                              })
+
+        table.append(emotion_table)
+
+
+df = pd.DataFrame(table)
+df.to_csv('test.csv')
+
+label = df[['emotion']]
+data = df[['EMG(jaw)','BVP','GSR(palm)','Respiration']]
+
+label = OrdinalEncoder().fit_transform(label)
+data = StandardScaler().fit_transform(data)
+linear_model = LinearRegression()
+
+linear_model.fit(data,label)
