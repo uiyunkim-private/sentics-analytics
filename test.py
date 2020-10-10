@@ -111,7 +111,7 @@ print(data.shape)
 model = tf.keras.Sequential()
 model.add(tf.keras.layers.Dense(256,input_shape=(4,2001)))
 model.add(tf.keras.layers.Dense(512))
-
+model.add(tf.keras.layers.Dense(512))
 model.add(tf.keras.layers.Flatten())
 model.add(tf.keras.layers.Dense(8,activation='softmax'))
 
