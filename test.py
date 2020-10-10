@@ -47,7 +47,3 @@ for d in range(1,21):
 data = [x for x in list_data if x['emotion'] == 'Anger']
 print(data)
 
-# for data in list_data:
-#     plt.plot(data[0])
-#     plt.title(data[1][0] + data[1][1] + data[1][2])
-#     plt.show()
