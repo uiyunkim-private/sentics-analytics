@@ -118,7 +118,7 @@ model.add(tf.keras.layers.Dense(8,activation='softmax'))
 optimizer = tf.keras.optimizers.Adam(learning_rate=0.0000005)
 model.compile(optimizer=optimizer,loss='categorical_crossentropy',metrics=['accuracy'])
 
-history = model.fit(x=data,y=label,epochs=100,validation_split=0.1,batch_size=8)
+history = model.fit(x=data,y=label,epochs=100,validation_split=0.25,batch_size=8)
 
 def plot_train_and_val(history):
     plt.plot(history.history['accuracy'])
