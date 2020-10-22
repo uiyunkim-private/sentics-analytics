@@ -4,7 +4,8 @@ from sklearn.metrics import accuracy_score
 from sklearn.metrics import confusion_matrix
 from tensorflow.keras.wrappers.scikit_learn import KerasClassifier
 import seaborn as sns
-
+from src.configuration import ROOT_DIR
+from src.configuration import SAVE_PLOT
 class TFTrainer:
 
     def __init__(self,model_fn,data,label,name,epochs=10,test_size=0.25,batch_size=8):
@@ -44,7 +45,8 @@ class TFTrainer:
         cm = confusion_matrix(self.y_test, self.y_pred)
         sns.heatmap(cm, annot=True)
         plt.title(self.name)
-        plt.savefig(self.name + "_confusion_matrix.png",dpi=300)
+        if SAVE_PLOT:
+            plt.savefig(ROOT_DIR / (self.name + "_confusion_matrix.png"),dpi=300)
         plt.show()
 
     def build_fn(self):
@@ -69,8 +71,8 @@ class TFTrainer:
         plt.xlabel('epoch')
         plt.legend(['train', 'Validation'], loc='upper left')
         plt.grid()
-
-        plt.savefig(self.name + "_learning_graph.png", dpi=300)
+        if SAVE_PLOT:
+            plt.savefig(ROOT_DIR / (self.name + "_learning_graph.png"), dpi=300)
         plt.show()
 
 
@@ -105,7 +107,8 @@ class SKLTrainer:
         cm = confusion_matrix(self.y_test, self.y_pred)
         sns.heatmap(cm, annot=True)
         plt.title(self.name)
-        plt.savefig(self.name + "_confusion_matrix.png", dpi=300)
+        if SAVE_PLOT:
+            plt.savefig(ROOT_DIR / (self.name + "_confusion_matrix.png"), dpi=300)
         plt.show()
 
 
