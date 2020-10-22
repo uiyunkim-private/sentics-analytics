@@ -46,7 +46,7 @@ class TFTrainer:
         sns.heatmap(cm, annot=True)
         plt.title(self.name)
         if SAVE_PLOT:
-            plt.savefig(ROOT_DIR / (self.name + "_confusion_matrix.png"),dpi=300)
+            plt.savefig(ROOT_DIR /"documentation" /(self.name + "_confusion_matrix.png"),dpi=300)
         plt.show()
 
     def build_fn(self):
@@ -72,7 +72,7 @@ class TFTrainer:
         plt.legend(['train', 'Validation'], loc='upper left')
         plt.grid()
         if SAVE_PLOT:
-            plt.savefig(ROOT_DIR / (self.name + "_learning_graph.png"), dpi=300)
+            plt.savefig(ROOT_DIR /"documentation" / (self.name + "_learning_graph.png"), dpi=300)
         plt.show()
 
 
@@ -108,7 +108,7 @@ class SKLTrainer:
         sns.heatmap(cm, annot=True)
         plt.title(self.name)
         if SAVE_PLOT:
-            plt.savefig(ROOT_DIR / (self.name + "_confusion_matrix.png"), dpi=300)
+            plt.savefig(ROOT_DIR /"documentation"  / (self.name + "_confusion_matrix.png"), dpi=300)
         plt.show()
 
 
