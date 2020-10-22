@@ -3,8 +3,8 @@
  
 LSTM Learning Graph
  
-![LSTM_Result](document/LSTM-learning-graph.PNG)
+![LSTM_Result](documentation/LSTM-learning-graph.PNG)
 
 Score Comparision
  
-![LSTM_Result](document/Scores-Comparison.PNG)
+![LSTM_Result](documentation/Scores-Comparison.PNG)
