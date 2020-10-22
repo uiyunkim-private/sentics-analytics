@@ -1,6 +1,7 @@
 from pathlib import Path
 
 ROOT_DIR = Path(__file__).parent.parent
+SAVE_PLOT = True
 
 if __name__ == '__main__':
     print(ROOT_DIR)

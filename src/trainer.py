@@ -44,6 +44,7 @@ class TFTrainer:
         cm = confusion_matrix(self.y_test, self.y_pred)
         sns.heatmap(cm, annot=True)
         plt.title(self.name)
+        plt.savefig(self.name + "_confusion_matrix.png",dpi=300)
         plt.show()
 
     def build_fn(self):
@@ -68,6 +69,8 @@ class TFTrainer:
         plt.xlabel('epoch')
         plt.legend(['train', 'Validation'], loc='upper left')
         plt.grid()
+
+        plt.savefig(self.name + "_learning_graph.png", dpi=300)
         plt.show()
 
 
@@ -102,6 +105,7 @@ class SKLTrainer:
         cm = confusion_matrix(self.y_test, self.y_pred)
         sns.heatmap(cm, annot=True)
         plt.title(self.name)
+        plt.savefig(self.name + "_confusion_matrix.png", dpi=300)
         plt.show()
 
 
