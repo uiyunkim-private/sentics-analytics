@@ -1,6 +1,13 @@
 # Sentics Analytics
 
+### Update
+
+- Created Window-slide LSTM model.
+- Compared scikit-learn models.
+- Naive Bayes model not working.
+- No data normalization
+
 ### Figures
-![LSTM Result](documentation/LSTM_learning_graph.png)
-![LSTM Result](documentation/LSTM_confusion_matrix.png)
-![LSTM Result](documentation/Score_comparison.png)
+![](documentation/LSTM_learning_graph.png)
+![](documentation/LSTM_confusion_matrix.png)
+![](documentation/Score_comparison.png)
