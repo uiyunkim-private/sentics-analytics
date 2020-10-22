@@ -8,7 +8,7 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.naive_bayes import CategoricalNB
 from sklearn.preprocessing import Normalizer
 import matplotlib.pyplot as plt
-
+from src.configuration import SAVE_PLOT,ROOT_DIR
 def NaiveBayes_session():
     data, label = load_dataset('df')
     data = StandardScaler().fit_transform(data)
@@ -105,4 +105,6 @@ if __name__ =='__main__':
     plt.xlabel("Model")
     plt.ylabel("Score")
     plt.title("Score Comparison")
+    if SAVE_PLOT:
+        plt.savefig(ROOT_DIR/"documentation"/ "Score_comparison.png",dpi=300)
     plt.show()
