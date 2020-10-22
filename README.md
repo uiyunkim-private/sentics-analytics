@@ -1,4 +1,4 @@
-#Sentics Analytics
+# Sentics Analytics
 
 ![LSTM Result](documenataion/LSTM-learning-graph.PNG)
 
