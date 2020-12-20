@@ -9,6 +9,8 @@ from sklearn.naive_bayes import CategoricalNB
 from sklearn.preprocessing import Normalizer
 import matplotlib.pyplot as plt
 from src.configuration import SAVE_PLOT,ROOT_DIR
+from tensorflow.python.client import device_lib
+
 def NaiveBayes_session():
     data, label = load_dataset('df')
     data = StandardScaler().fit_transform(data)
@@ -74,16 +76,16 @@ def Dense_session():
     trainer.plot_confusion_matrix()
     return score
 
-def LSTM_session():
-    data, label = load_dataset('np')
-    data = window_sliding(data,window_size=20,stride=5)
+def LSTM_session(window_size=2000,stride=10,epochs=10):
+    data, label = load_dataset('np',window_size=50,stride=10)
+    print(data.shape)
     trainer = TFTrainer(model_fn=tf_lstm,
                         data=data,
                         label=label,
-                        name="LSTM",
-                        epochs=10,
+                        name="2.5 sec per sample LSTM",
+                        epochs=1000,
                         test_size=0.15,
-                        batch_size=8)
+                        batch_size=256)
     trainer.fit()
     trainer.plot_history()
     score = trainer.evaluate()
@@ -92,16 +94,16 @@ def LSTM_session():
 
 
 if __name__ =='__main__':
-    test_scores = [LSTM_session(),
-                   Dense_session(),
-                   RandomForest_session(),
-                   SVC_session(),
-                   DecisionTree_session(),
-                   NaiveBayes_session()]
+    test_scores = [LSTM_session()]
+    # test_scores = [Dense_session(),
+    #                RandomForest_session(),
+    #                SVC_session(),
+    #                DecisionTree_session()
+    #                ]
 
     print(test_scores)
 
-    plt.bar(["LSTM","Dense","RandomForest","SVC","DecisionTree","NaiveBayes"],test_scores)
+    plt.bar(["Dense","RandomForest","SVC","DecisionTree"],test_scores)
     plt.xlabel("Model")
     plt.ylabel("Score")
     plt.title("Score Comparison")

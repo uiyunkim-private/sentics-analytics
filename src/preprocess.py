@@ -1,22 +1,32 @@
 import scipy.io
 import pandas as pd
 import numpy as np
-
+import matplotlib.pyplot as plt
 from src.configuration import ROOT_DIR
 
-def window_sliding(data,window_size=10,stride=2):
-    windows = []
-    for x in data:
-        instance = x.copy()
-        instance = instance.transpose()
-        window = []
-        for i in range(0,len(instance)-window_size,stride):
-            window.append(instance[i:i+window_size])
-        windows.append(window)
-    windows = np.array(windows)
-    return windows
+def window_sliding(data,label,window_size=10,stride=2):
 
-def load_dataset(dtype='np'):
+    instances = []
+    for k, x in enumerate(data):
+        sensor_windows = []
+        for i in range(0,x.shape[1] - window_size,stride):
+            windows = []
+            for j in range(x.shape[0]):
+                windows.append(x[j][i:i+window_size])
+            sensor_windows.append(windows)
+
+        instances.append(sensor_windows)
+
+    final = []
+    final_label = []
+    for i, x in enumerate(instances):
+        cat = label[i]
+        for y in x:
+            final.append(y)
+            final_label.append(cat)
+
+    return np.array(final),np.array(final_label)
+def load_dataset(dtype='np',window_size=100,stride=10):
     '''
 
     dtype: 'np' or 'df'
@@ -28,7 +38,7 @@ def load_dataset(dtype='np'):
     list_data = []
     for d in range(1,21):
         day = 'day' + str(d)
-        mat = scipy.io.loadmat(ROOT_DIR / 'dataset'/ 'set_a' / (day+'.mat'))
+        mat = scipy.io.loadmat(ROOT_DIR / 'dataset'/ 'emotion_predict_dataset'/ 'set_a' / (day+'.mat'))
         data = mat[day]
         data = data.reshape((32,2001))
 
@@ -112,11 +122,14 @@ def load_dataset(dtype='np'):
             collection.append(pd.concat(instance, axis=1, sort=False))
         result = pd.concat(collection,axis=0,sort=False)
 
+        print(result.head())
         return result, label
     else:
-        # label = tf.keras.utils.to_categorical(label, num_classes=8)
+        print(data.shape)
+        data, label = window_sliding(data,label,window_size=window_size,stride=stride)
+
         return data,label
 
 if __name__ == '__main__':
     data,label = load_dataset(dtype='np')
-    window_sliding(data)
+    #window_sliding(data)

@@ -6,6 +6,9 @@ from tensorflow.keras.wrappers.scikit_learn import KerasClassifier
 import seaborn as sns
 from src.configuration import ROOT_DIR
 from src.configuration import SAVE_PLOT
+from tensorflow.keras.callbacks import EarlyStopping
+
+
 class TFTrainer:
 
     def __init__(self,model_fn,data,label,name,epochs=10,test_size=0.25,batch_size=8):
@@ -22,7 +25,14 @@ class TFTrainer:
         self.fitted = False
 
     def fit(self):
-        self.history = self.model.fit(x=self.X_train,y=self.y_train,validation_data=(self.X_test,self.y_test),epochs=self.epochs,batch_size=self.batch_size)
+        es = EarlyStopping(patience=35)
+
+
+        self.history = self.model.fit(x=self.X_train,y=self.y_train,
+                                      validation_data=(self.X_test,self.y_test),
+                                      epochs=self.epochs,
+                                      batch_size=self.batch_size,
+                                      callbacks=[es])
         self.tested = False
         self.fitted = True
 
